@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nomad_flutter/currency_card.dart';
 
 import 'button.dart';
 
@@ -16,7 +17,8 @@ class App extends StatelessWidget {
       // root 앱이라서 MaterialApp(구글,안드로이드)을 사용할지, CupertinoApp(ios) 선택
       home: Scaffold(
         backgroundColor: const Color(0xFF181818), // 임의 지정 색 정할 때 (Color(0xFF"")
-        body: Padding(
+        body: SingleChildScrollView( // 넘치는거에 대한 문제
+          child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             // all() 전체적으로 margin, only(right,left) 상하좌우 중 한 가지를 구체적으로 정할 수 있는, symmetric horizontal(row), verticl(column)
             child: Column(
@@ -47,7 +49,7 @@ class App extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 120,
+                  height: 70,
                 ),
                 Text(
                   'Toatal Balance',
@@ -74,6 +76,7 @@ class App extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
                     Button(
+                      // dart 클래스 이용해서 위젯 적용
                       text: 'Transfer',
                       bgColor: Colors.amber,
                       textColor: Colors.black,
@@ -86,7 +89,7 @@ class App extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 100,
+                  height: 50,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,54 +114,37 @@ class App extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFF1F2123),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    padding: const EdgeInsets.all(30),
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Euro",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  '6 428',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
+                const CurrencyCard(
+                  name: 'Euro',
+                  code: 'EUR',
+                  amount: '6 428',
+                  icon: Icons.euro_rounded,
+                  isInverted: false, // 색이 없음
+                ),
+                Transform.translate(
+                offset: Offset(0, -20),
+                  child: const CurrencyCard(
+                  name: 'Bitcoin',
+                  code: 'BTC',
+                  amount: '9 785',
+                  icon: Icons.currency_bitcoin,
+                  isInverted: true, // 배경색을 흰색으로 변경해야함
+                  ),
+                ),
+                Transform.translate(offset: Offset (0,-40),
+                  child: const CurrencyCard(
+                  name: 'Dollar',
+                  code: 'USD',
+                  amount: '428',
+                  icon: Icons.attach_money_outlined,
+                  isInverted: false, // 색이 없음
+                ),
+          ),
 
-                                const SizedBox(
-                                  width: 5,
-                                ),
-
-                                Text(
-                                  "EUR",
-                                  style: TextStyle(
-                                      color: Colors.white.withOpacity(0.8),
-                                      fontSize: 20),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
               ],
             )),
       ),
+    )
     );
   }
 }
